@@ -1,4 +1,4 @@
-import chalk from "chalk";
+// import chalk from "chalk";
 import express from "express";
 import cors from "cors";
 const app = express();
@@ -26,6 +26,6 @@ process.on("uncaughtException", (err) => {
   console.error(`Uncaught Exception happened :${err}`);
 });
 
-app.listen(port, () => {
-  console.log(chalk.bold.green(`Listening on port ${port}`));
-});
+// app.listen(port, () => {
+//   console.log(chalk.bold.green(`Listening on port ${port}`));
+// });

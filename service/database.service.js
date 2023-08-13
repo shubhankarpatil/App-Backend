@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import chalk from "chalk";
+import express from "express";
+const app = express();
 const dbUrl = process.env.MONGO_URL;
-
+const port = 3000;
 export default function mongoService() {
   try {
     mongoose.connect(dbUrl, {
@@ -24,12 +26,25 @@ export default function mongoService() {
     mongoose.connection.on("disconnected", () => {
       console.log("MongoDB has been disconnected");
     });
-    
-    process.on("SIGINT", () => {
-      mongoose.connection.close(() => {
+
+    const server = app.listen(port, () => {
+      console.log(chalk.bold.green(`Listening on port ${port}`));
+    });
+
+    process.on("SIGINT", async () => {
+      console.log("Shutting down gracefully...");
+
+      // Close server and database connections
+      await server.close();
+
+      try {
+        await mongoose.connection.close();
         console.log("MongoDB connection has been disconnected due to application termination");
         process.exit(0);
-      });
+      } catch (error) {
+        console.error("Error while closing MongoDB connection:", error);
+        process.exit(1);
+      }
     });
   } catch (err) {
     console.log(err);
