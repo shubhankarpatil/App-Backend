@@ -34,8 +34,7 @@ export default function mongoService() {
     process.on("SIGINT", async () => {
       console.log("Shutting down gracefully...");
 
-      // Close server and database connections
-      await server.close();
+      server.close();
 
       try {
         await mongoose.connection.close();

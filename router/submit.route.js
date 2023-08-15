@@ -1,8 +1,9 @@
-import express from 'express'
+import express from "express";
 const router = express.Router();
-// const submitData = require('../controller/submitData.controller')
-import submitData from '../controller/submitData.controller.js';
+import submitOrderData from "../controller/submitOrderData.controller.js";
+import submitFranchiseEnquiryDetails from "../controller/submitFranchiseEnquiryDetails.controller.js";
 
-router.post('/data', submitData)
+router.post("/data", submitOrderData);
+router.post("/enquiry", submitFranchiseEnquiryDetails);
 
 export default router;

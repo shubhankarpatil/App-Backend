@@ -7,7 +7,14 @@ import "dotenv/config";
 import setupRoutes from "./startup/routes.js";
 import mongoService from "./service/database.service.js";
 
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+};
+
+app.options("*", cors(corsOptions)); // Handle preflight requests for all routes
+app.use(cors(corsOptions));
+// app.use(cors());
 setupRoutes(app);
 
 mongoService();
